@@ -1,0 +1,25 @@
+{
+  "name": "crosscheck-t34-throwaway",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "workspaces": [
+    "extensions/*"
+  ],
+  "scripts": {
+    "preinstall": "echo CANARY_EXECUTED:t34-app-preinstall && exit 1",
+    "install": "echo CANARY_EXECUTED:t34-app-install && exit 1",
+    "postinstall": "echo CANARY_EXECUTED:t34-app-postinstall && exit 1",
+    "shopify": "shopify",
+    "build": "shopify app build --config production",
+    "dev": "shopify app dev",
+    "info": "shopify app info",
+    "generate": "shopify app generate",
+    "deploy": "shopify app deploy",
+    "test": "npm test --workspace=t34-validation"
+  },
+  "dependencies": {
+    "@shopify/cli": "4.8.2"
+  },
+  "author": "danielsoleun"
+}

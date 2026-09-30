@@ -1,0 +1,23 @@
+# T34 throwaway merchant app (production config).
+# client_id is byte-identical to the scaffold's shopify.app.toml: the app is
+# registered in the Vertical Bar Inc. organization, do not change it.
+# Sample config from `shopify app init` (FAQ metaobjects, product metafields,
+# sidekick summary, scaffold URLs, app-home Direct-API access) was removed:
+# this app is one cart/checkout validation Function and needs no scopes.
+
+client_id = "faf2f4f45b5bf083bd2fdb6a09da9c24"
+name = "crosscheck-t34-throwaway"
+application_url = "https://shopify.dev/apps/default-app-home"
+embedded = true
+
+[build]
+include_config_on_deploy = true
+
+[webhooks]
+api_version = "2026-10"
+
+[access_scopes]
+scopes = ""
+
+[auth]
+redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]

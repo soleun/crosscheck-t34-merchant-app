@@ -1,0 +1,91 @@
+# T34 throwaway merchant app — caller for the trusted CrossCheck preparation
+# workflow (OG2(a)). Adapted from the caller example in
+# templates/shopify-merchant-app/README.md of the trusted template repo.
+#
+# The called reusable workflow cannot raise permissions above the caller's,
+# so this job grants exactly the three permissions the trusted workflow
+# needs: contents:read (checkout), id-token:write (attestations + upload
+# OIDC), attestations:write (build-provenance + receipt attestation).
+#
+# Dispatch from the GitHub UI (Actions -> merchant-app-release -> Run
+# workflow) or via `gh workflow run`. `claim_mode: recording` (the default)
+# never touches Shopify: no claim POST, no `shopify app deploy`, receipt
+# records `uploadStatus: not_attempted`.
+name: merchant-app-release
+
+on:
+  workflow_dispatch:
+    inputs:
+      claim_mode:
+        description: "'live' deploys; 'recording' never touches Shopify"
+        required: true
+        default: recording
+        type: choice
+        options:
+          - recording
+          - live
+      deploy_run_id:
+        description: CrossCheck deploy run id this preparation belongs to
+        required: true
+        type: string
+      workspace_id:
+        description: CrossCheck workspace id owning the enrolled app binding
+        required: true
+        type: string
+      app_binding_id:
+        description: Enrolled merchant-app binding id
+        required: true
+        type: string
+      claim_url:
+        description: CrossCheck claim endpoint (empty in recording mode)
+        required: false
+        default: ""
+        type: string
+      generation:
+        description: Deploy generation (positive integer)
+        required: true
+        default: "1"
+        type: string
+      requested_version:
+        description: Requested app version name
+        required: true
+        default: t34-merchant-app-release
+        type: string
+      node_version:
+        description: Enrolled Node toolchain version
+        required: false
+        default: "22.17.0"
+        type: string
+
+jobs:
+  prepare:
+    # The trusted workflow's `upload` job reads SHOPIFY_APP_AUTOMATION_TOKEN
+    # from the `shopify-upload` environment; the caller job must select the
+    # same environment so the secret reference below resolves to it and to
+    # nothing else. No other job sees any secret.
+    environment: shopify-upload
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    uses: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@48050adc673973a3419d00c152e5aaf9fda70681
+    with:
+      commit_sha: ${{ github.sha }}
+      app_root: app
+      config_name: production
+      client_id: 'faf2f4f45b5bf083bd2fdb6a09da9c24'
+      baseline_json: ${{ vars.MERCHANT_APP_BASELINE_JSON }}
+      claim_mode: ${{ inputs.claim_mode }}
+      claim_url: ${{ inputs.claim_url }}
+      deploy_run_id: ${{ inputs.deploy_run_id }}
+      workspace_id: ${{ inputs.workspace_id }}
+      app_binding_id: ${{ inputs.app_binding_id }}
+      generation: ${{ fromJSON(inputs.generation) }}
+      requested_version: ${{ inputs.requested_version }}
+      source_control_url: https://github.com/soleun/crosscheck-t34-merchant-app/commit/${{ github.sha }}
+      node_version: ${{ inputs.node_version }}
+      trusted_template_repo: soleun/crosscheck-t34-trusted-workflow
+      trusted_template_ref: 48050adc673973a3419d00c152e5aaf9fda70681
+      trusted_workflow_ref: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@48050adc673973a3419d00c152e5aaf9fda70681
+    secrets:
+      SHOPIFY_APP_AUTOMATION_TOKEN: ${{ secrets.SHOPIFY_APP_AUTOMATION_TOKEN }}

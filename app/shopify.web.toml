@@ -1,0 +1,12 @@
+# AC-T34-03 canary (b): executable repository command for the Shopify CLI web
+# lifecycle. Intentionally there is NO `build` key: `shopify app build` runs
+# `commands.build` for every discovered web, so a build canary would fire in
+# the secretless build job and break the recording run. The `dev` command is
+# only ever invoked by `shopify app dev` (or a deploy flow that builds webs);
+# the trusted prepare.yml deploys with `--no-build` and never runs dev, so if
+# this command ever executes in CI the run fails loudly instead of silently
+# running merchant-controlled bytes in a token-bearing job. See CANARIES.md.
+roles = ["frontend"]
+
+[commands]
+dev = "echo CANARY_EXECUTED:t34-shopify-web-dev && exit 1"

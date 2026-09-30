@@ -21,7 +21,6 @@ lerna-debug.log*
 
 # Build
 dist
-shared/types/graphql
 *.local
 
 # Editor directories and files
@@ -34,3 +33,4 @@ shared/types/graphql
 *.njsproj
 *.sln
 *.sw?
+.scratch-*/
