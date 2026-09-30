@@ -51,6 +51,10 @@ on:
         required: true
         default: t34-merchant-app-release
         type: string
+      preparation_nonce:
+        description: Correlation nonce echoed in the claim body
+        required: true
+        type: string
       node_version:
         description: Enrolled Node toolchain version
         required: false
@@ -68,7 +72,7 @@ jobs:
       contents: read
       id-token: write
       attestations: write
-    uses: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@48050adc673973a3419d00c152e5aaf9fda70681
+    uses: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@0e571fa5c99d3d42a0ce627c43f87295130a9c3a
     with:
       commit_sha: ${{ github.sha }}
       app_root: app
@@ -82,10 +86,12 @@ jobs:
       app_binding_id: ${{ inputs.app_binding_id }}
       generation: ${{ fromJSON(inputs.generation) }}
       requested_version: ${{ inputs.requested_version }}
+      preparation_nonce: ${{ inputs.preparation_nonce }}
       source_control_url: https://github.com/soleun/crosscheck-t34-merchant-app/commit/${{ github.sha }}
       node_version: ${{ inputs.node_version }}
       trusted_template_repo: soleun/crosscheck-t34-trusted-workflow
-      trusted_template_ref: 48050adc673973a3419d00c152e5aaf9fda70681
-      trusted_workflow_ref: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@48050adc673973a3419d00c152e5aaf9fda70681
+      trusted_template_ref: 0e571fa5c99d3d42a0ce627c43f87295130a9c3a
+      trusted_workflow_ref: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@0e571fa5c99d3d42a0ce627c43f87295130a9c3a
     secrets:
       SHOPIFY_APP_AUTOMATION_TOKEN: ${{ secrets.SHOPIFY_APP_AUTOMATION_TOKEN }}
+      CROSSCHECK_UPLOAD_KEY: ${{ secrets.CROSSCHECK_UPLOAD_KEY }}
