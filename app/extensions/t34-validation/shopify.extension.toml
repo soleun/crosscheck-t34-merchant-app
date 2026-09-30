@@ -3,6 +3,7 @@ api_version = "2026-07"
 [[extensions]]
 name = "t34-validation"
 handle = "t34-validation"
+uid = "2e2dff09-b2fc-16d5-5dd1-d4e3bd25932d20bb2f9e"
 type = "function"
 description = "T34 acceptance cart and checkout validation (throwaway)"
 
