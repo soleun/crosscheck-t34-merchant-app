@@ -24,8 +24,11 @@ Actions -> merchant-app-release -> Run workflow. `claim_mode` defaults to
 `recording` (never touches Shopify; receipt records
 `uploadStatus: not_attempted`). Fill in the CrossCheck ids (`deploy_run_id`,
 `workspace_id`, `app_binding_id`, `claim_url`, `preparation_nonce`) per dispatch; nothing
-CrossCheck-issued is hard-coded in the repo. The `SHOPIFY_APP_AUTOMATION_TOKEN`
-and `CROSSCHECK_UPLOAD_KEY` secrets come from the `shopify-upload` environment.
+CrossCheck-issued is hard-coded in the repo. The trusted workflow's `upload`
+job declares the `shopify-upload` environment, so GitHub resolves the
+`SHOPIFY_APP_AUTOMATION_TOKEN` and `CROSSCHECK_UPLOAD_KEY` secrets inside the
+called job; the caller only passes the secret references through (both are
+`required: false` in the template) and selects no environment itself.
 
 ## Canaries
 

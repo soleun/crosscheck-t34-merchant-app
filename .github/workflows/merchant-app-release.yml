@@ -63,11 +63,11 @@ on:
 
 jobs:
   prepare:
-    # The trusted workflow's `upload` job reads SHOPIFY_APP_AUTOMATION_TOKEN
-    # from the `shopify-upload` environment; the caller job must select the
-    # same environment so the secret reference below resolves to it and to
-    # nothing else. No other job sees any secret.
-    environment: shopify-upload
+    # The trusted workflow's `upload` job declares `environment: shopify-upload`,
+    # so GitHub resolves that environment's secrets inside the called job, and
+    # the caller-side `secrets:` pass-through below is harmless. Both template
+    # secrets are `required: false`. A job that calls a reusable workflow may
+    # not carry `environment` itself, so this caller declares none.
     permissions:
       contents: read
       id-token: write
