@@ -72,7 +72,7 @@ jobs:
       contents: read
       id-token: write
       attestations: write
-    uses: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@c01e466961765c1a0ccd1942ef0037696ce263b6
+    uses: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@868d5580df685375e30308b573190e0e04ebacf9
     with:
       commit_sha: ${{ github.sha }}
       app_root: app
@@ -90,8 +90,8 @@ jobs:
       source_control_url: https://github.com/soleun/crosscheck-t34-merchant-app/commit/${{ github.sha }}
       node_version: ${{ inputs.node_version }}
       trusted_template_repo: soleun/crosscheck-t34-trusted-workflow
-      trusted_template_ref: c01e466961765c1a0ccd1942ef0037696ce263b6
-      trusted_workflow_ref: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@c01e466961765c1a0ccd1942ef0037696ce263b6
+      trusted_template_ref: 868d5580df685375e30308b573190e0e04ebacf9
+      trusted_workflow_ref: soleun/crosscheck-t34-trusted-workflow/.github/workflows/prepare.yml@868d5580df685375e30308b573190e0e04ebacf9
     secrets:
       SHOPIFY_APP_AUTOMATION_TOKEN: ${{ secrets.SHOPIFY_APP_AUTOMATION_TOKEN }}
       CROSSCHECK_UPLOAD_KEY: ${{ secrets.CROSSCHECK_UPLOAD_KEY }}
