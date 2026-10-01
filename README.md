@@ -37,3 +37,7 @@ lifecycle scripts, the `shopify.web.toml` command, and the `.npmrc` hook.
 Each prints a `CANARY_EXECUTED:<name>` marker and exits non-zero if it ever
 runs, so any job that executes repository commands fails loudly instead of
 silently.
+
+## Release log
+
+- 2026-10-01: live preparation run after the receipt-verifier fix (T422). README-only change, so the next app version gets a fresh name; no app, extension or TOML change.
