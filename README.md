@@ -42,3 +42,4 @@ silently.
 
 - 2026-10-01: live preparation run after the receipt-verifier fix (T422). README-only change, so the next app version gets a fresh name; no app, extension or TOML change.
 - 2026-10-02: live preparation run after the full-seal and no-effect settlement fixes (T425-T427). README-only change for a fresh version name.
+- 2026-10-02: live preparation run after the schema-valid Cell overlay (T428) and read-only settlement (T429). README-only change for a fresh version name.
