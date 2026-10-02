@@ -48,3 +48,4 @@ silently.
 - 2026-10-02: retention gate cycle F3 (RND-4798). README-only change for a fresh version name.
 - 2026-10-02: retention gate cycle F4 (RND-4798). README-only change for a fresh version name.
 - 2026-10-02: retention gate cycle F5 (RND-4798). README-only change for a fresh version name.
+- 2026-10-02: retention gate cycle U1 (RND-4798). README-only change for a fresh version name.
